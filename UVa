@@ -1,1 +1,48 @@
+#include<bits/stdc++.h>
+using namespace std;
 
+vector<int>node[25];
+int vis[25],flg,lvl=0,cd=0,pr=1;
+queue<int>Q;
+void bfs(int s,int d){
+    Q.push(s);vis[s]=1;
+    while(!Q.empty()){
+        int top=Q.front();Q.pop();vis[top]=1;
+            for(int i=0;i<node[top].size();i++){
+                if(node[top][i]==d){flg=1;break;}
+                else if(vis[node[top][i]]==0){cd++;Q.push(node[top][i]);vis[node[top][i]]=1;}
+            }
+            if(flg)break;
+            pr--;
+            if(pr==0){lvl++;pr=cd;cd=0;}
+    }
+}
+int main()
+{
+    int cs=1;
+	while(1){
+        for (int i=1;i<20;i++){
+		int n,a;cin>>n;
+		if(cin.fail())return 0;
+		while(n--){
+			cin>>a;
+			node[i].push_back(a);
+			node[a].push_back(i);
+		}
+	}
+	int x,s,d;
+	cin>>x;
+	cout<<"Test Set #"<<cs++<<endl;
+	while(x--){
+		cin>>s>>d;
+		bfs(s,d);
+		printf("%2d to %2d: %d\n",s,d,++lvl);
+		memset(vis,0,sizeof(vis));flg=0;cd=0;pr=1;lvl=0;
+		Q=queue<int>();
+	}
+	printf("\n");
+	for(int i=0;i<25;i++)node[i].clear();
+	}
+
+return 0;
+}
