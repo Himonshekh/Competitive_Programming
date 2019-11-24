@@ -1,0 +1,41 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+
+typedef long long  L;
+//typedef tree<L,null_type,less<L>,rb_tree_tag,tree_order_statistics_node_update> ordered_set;
+char str[10],alph[30]={'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'};
+L cnt;
+map<string,L>Mp;
+
+void dfs(L id,L len,L pos){
+    if(id==len){
+        str[id]='\0';
+        Mp[string(str)]=cnt++;
+        return;
+    }
+    
+    for(L i=pos;i<26;i++){
+        str[id]=alph[i];
+        dfs(id+1,len,i+1);
+    }
+}
+
+
+void process(){
+    cnt=1;
+    dfs(0,1,0);
+    dfs(0,2,0);
+    dfs(0,3,0);
+    dfs(0,4,0);
+    dfs(0,5,0);
+}
+int main()
+{
+    process();
+    while(scanf("%s",str)!=EOF){
+        printf("%lld\n", Mp[string(str)]);
+    }
+    return 0;
+}
+/// lld I64d push_back() top() pop() insert() upper_bound() lower_bound() memset() max() min() scanf
