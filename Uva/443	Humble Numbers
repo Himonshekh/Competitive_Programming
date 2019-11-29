@@ -1,0 +1,33 @@
+#include<bits/stdc++.h>
+using namespace std;
+#define inf 200000
+typedef long long L;
+vector<L> V;
+L n;
+void process(){
+	L id2,id3,id5,id7;
+	id2=id3=id5=id7=0;
+	V.push_back(1);
+	for(L i=1;i<=5842;i++){
+		n=min(min(2*V[id2],3*V[id3]),min(5*V[id5],7*V[id7]));
+		n=min_(2*V[id2],3*V[id3],5*V[id5],7*V[id7]);
+		V.push_back(n);
+		if(2*V[id2]<=n)id2++;
+		if(3*V[id3]<=n)id3++;
+		if(5*V[id5]<=n)id5++;
+		if(7*V[id7]<=n)id7++;
+	}
+}
+int main()
+{
+	process();
+	while(scanf("%lld",&n)&&n){
+		printf("The %lld",n);
+		if(n%10==1&&n%100!=11)printf("st ");
+		else if(n%10==2&&n%100!=12)printf("nd ");
+		else if(n%10==3&&n%100!=13)printf("rd ");
+		else printf("th ");
+		printf("humble number is %lld.\n",V[n-1]);
+	}
+	return 0;
+}
