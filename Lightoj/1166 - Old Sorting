@@ -1,0 +1,30 @@
+#include<bits/stdc++.h>
+using namespace std;
+int t,n,d,i,cas=1,c;
+int V[101],Mp[101];
+void solve(){
+	c=0;
+	for(i=1;i<=n;i++){
+		if(Mp[i]!=i){
+			d=Mp[i];
+			swap(V[i-1],V[d-1]);
+			Mp[i]=i;
+			Mp[ V[d-1] ]=d;
+			c++;
+		}
+	}
+	printf("Case %d: %d\n",cas++,c);
+}
+int main()
+{
+	scanf("%d",&t);
+	while(t--){
+		scanf("%d",&n);
+		for(i=0;i<n;i++){
+			scanf("%d",&V[i]);
+			Mp[V[i]]=i+1;
+		}
+		solve();
+	}
+	return 0;
+}
