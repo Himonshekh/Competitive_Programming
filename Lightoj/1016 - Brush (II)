@@ -1,0 +1,41 @@
+#include <bits/stdc++.h>
+using namespace std;
+int t,n,m,d,i,cas=1,c;
+struct info{
+	int x,y;
+	info(int x_,int y_){
+		x=x_;y=y_;
+	}
+};
+vector<info>V;
+bool cmp(info lf,info rt){
+	if(lf.y<rt.y)return true;
+	else return false;
+}
+
+void solve(){
+	sort(V.begin(), V.end(),cmp);
+	d=V[0].y+m;
+	c=1;
+	for(i=1;i<n;i++){
+		if(d>=V[i].y)continue;
+		d=V[i].y+m;c++;
+	}
+
+	printf("Case %d: %d\n",cas++,c);
+}
+int main()
+{
+	int x,y;
+	scanf("%d",&t);
+	while(t--){
+		scanf("%d%d",&n,&m);
+		for(i=0;i<n;i++){
+			scanf("%d%d",&x,&y);
+			V.push_back(info(x,y));
+		}
+		solve();
+		if(t)V.clear();
+	}
+	return 0;
+}
