@@ -1,0 +1,21 @@
+#include <stdio.h>
+int t,n,i,cas=1,c;
+char grid[101];
+void solve(){
+	c=0;
+	for(i=0;i<n;i++){
+		if(grid[i]=='.'){
+			c++;i+=2;
+		}
+	}
+	printf("Case %d: %d\n",cas++,c);
+}
+int main()
+{
+	scanf("%d",&t);
+	while(t--){
+		scanf("%d%s",&n,grid);
+		solve();
+	}
+	return 0;
+}
