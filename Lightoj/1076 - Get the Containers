@@ -1,0 +1,50 @@
+#include <bits/stdc++.h>
+using namespace std;
+int t,n,i,cas=1,c,A[1001],mx,m,ans;
+bool test(int cap){
+	if(cap<mx)return false;
+	int tem=A[0];c=1;
+	for(i=1;i<n;i++){
+		if(tem+A[i]>cap){
+			c++;
+			tem=0;
+		}
+		tem+=A[i];
+		if(c>m||tem>cap)return false;
+	}
+	return true;
+}
+void binary_search(){
+	int lf=1,rt=1000000000,md;
+	mx=0;
+	while(lf<=rt){
+		md=(lf+rt)/2;
+		if(test(md)){
+			ans=md;
+			rt=md-1;
+		}else{
+			lf=md+1;
+		}
+	}
+}
+void solve(){
+	if(n>m){
+		binary_search();
+		mx=ans;
+	}
+	printf("Case %d: %d\n",cas++,mx);
+}
+int main()
+{
+	scanf("%d",&t);
+	while(t--){
+		scanf("%d%d",&n,&m);
+		mx=-1;
+		for(i=0;i<n;i++){
+			scanf("%d",&A[i]);
+			mx=max(mx,A[i]);
+		}
+		solve();
+	}
+	return 0;
+}
