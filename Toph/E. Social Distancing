@@ -1,1 +1,84 @@
 
+#include<bits/stdc++.h>
+#include<cstdio>
+#include<cstring>
+
+//#include <ext/pb_ds/assoc_container.hpp> 
+//#include <ext/pb_ds/tree_policy.hpp>
+//#include <functional> // for less
+//using namespace __gnu_pbds;
+
+#define max_(x, y) (((x) > (y)) ? (x) : (y))
+#define min_(x, y) (((x) < (y)) ? (x) : (y))
+#define ___ ios_base::sync_with_stdio(false);cin.tie(NULL);
+using namespace std;
+#define Mx 100001
+#define inf 1e15
+const int MOD = 1e9+7;
+// const double pi = 2 * acos (0.0);
+
+/*------------------------------Graph Moves----------------------------*/
+//const int fx[]={+1,-1,+0,+0};
+//const int fy[]={+0,+0,+1,-1};
+//const int fx[]={+0,+0,+1,-1,-1,+1,-1,+1};   // Kings Move
+//const int fy[]={-1,+1,+0,+0,+1,+1,-1,-1};  // Kings Move
+//const int fx[]={-2, -2, -1, -1,  1,  1,  2,  2};  // Knights Move
+//const int fy[]={-1,  1, -2,  2, -2,  2, -1,  1}; // Knights Move
+/*---------------------------------------------------------------------*/
+
+
+typedef long long  L;
+//typedef tree<L,null_type,less<L>,rb_tree_tag,tree_order_statistics_node_update> ordered_set;
+
+L a1,a2,a3,b1,b2,b3,c,c1,c2,c3,d,d1,d2,d3,d4,d5,e1,e2,e3,f,h,k,l,m,n,m1,m2,n1,n2,o,p,p1,p2,p3,p4,q,q1,q2,q3,q4,r,s,t,
+u,v,x,y,z,tot,mx=-inf,mn=inf,flg,flg1,flg2,id1,id2,id3,id4,lim;
+L A[Mx],Mp_a[Mx],Tree[Mx*4];
+
+L query(L node,L left,L right,L id,L jd){
+    if(left>jd||right<id){
+        return 0;
+    }
+    if(left>=id&&right<=jd){
+        return Tree[node];
+    }
+    L mid=(left+right)/2;
+    return query(node*2,left,mid,id,jd)+query(node*2+1,mid+1,right,id,jd);
+}
+void update(L node,L left,L right,L id){
+    if(left==id&&right==id){
+        Tree[node]=1;
+        return;
+    }
+    if(left>id||right<id){
+        return ;
+    }
+
+    L mid=(left+right)/2;
+    update(node*2,left,mid,id);
+    update((node*2) + 1,mid+1,right,id);
+    Tree[node]=(Tree[node*2]+Tree[(node*2) + 1]);
+}
+void solve(){
+    c=0;
+    for(L i=1;i<=n;i++){
+        d1=Mp_a[A[i]];
+        d2=query(1,1,n,1,d1);
+        update(1,1,n,d1);
+        d1=d1-d2-1;
+        c+=d1;
+    }
+    printf("%lld\n",c);
+}
+int main()
+{
+    scanf("%lld",&n);
+    for(L i=1;i<=n;i++){
+        scanf("%lld",&A[i]);
+    }
+    for(L i=1;i<=n;i++){
+        scanf("%lld",&d);
+        Mp_a[d]=i;
+    }
+    solve();
+    return 0;
+}
