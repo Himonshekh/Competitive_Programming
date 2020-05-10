@@ -1,0 +1,76 @@
+#include<bits/stdc++.h>
+//#include <ext/pb_ds/assoc_container.hpp> 
+//#include <ext/pb_ds/tree_policy.hpp>
+//#include <functional> // for less
+//using namespace __gnu_pbds;
+using namespace std;
+#define Mx 100001
+
+int n,m,id,u,v,d;
+//double rat;
+map<int,int>Mp;
+vector<int>V;
+int A[Mx];
+struct info{
+    int cnt;
+    info *left,*right;
+    info(int cnt_,info *left_,info *right_){
+        cnt=cnt_;
+        left=left_;
+        right=right_;
+    }
+    // info(int count, info *left, info *right):
+    //     count(count), left(left), right(right) {}
+
+    info* insert_(int lf,int rt,int idx){
+        // info *temp;
+        if(lf<=idx && idx<rt){
+            if(lf+1==rt){
+                return new info(this->cnt+1,NULL,NULL);
+                // return temp;
+            }
+            int mid=(lf+rt)/2;
+            return new info(this->cnt+1,this->left->insert_(lf,mid,idx),this->right->insert_(mid,rt,idx));
+            // return temp;
+        }
+        return this;
+    }
+};
+info *start = new info(0,NULL,NULL);
+info *root[Mx];
+int query(info *rv,info *ru,int lf,int rt,int idx){
+    if(lf+1==rt){
+        return lf;
+    }
+    int k=rv->left->cnt -ru->left->cnt;
+    int mid=(lf+rt)/2;
+    if(k>=idx){
+        return query(rv->left,ru->left,lf,mid,idx);
+    }
+    return query(rv->right,ru->right,mid,rt,idx-k);
+}
+int main()
+{
+    id=0;
+    scanf("%d%d",&n,&m);
+    for(int i=0;i<n;i++){
+        scanf("%d",&A[i]);
+        Mp[A[i]];
+    }
+    map<int, int>::iterator itr; 
+    for (itr = Mp.begin(); itr != Mp.end(); ++itr) {
+        V.push_back(itr->first);
+        Mp[itr->first]=id++;
+    }
+    start->left=start->right=start;
+    for(int i=0;i<n;i++){
+        root[i]=(i==0?start:root[i-1])->insert_(0,id,Mp[A[i]]);
+    }
+    for(int i=0;i<m;i++){
+        scanf("%d%d%d",&u,&v,&d);u--;v--;
+        d=query(root[v],u==0?start:root[u-1],0,id,d);
+        printf("%d\n",V[d]);
+    }
+    return 0;
+}
+/// empty() lld I64d push_back() top() pop() insert() upper_bound() lower_bound() memset() max() min() scanf continue
