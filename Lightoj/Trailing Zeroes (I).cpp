@@ -1,7 +1,3 @@
-/*
-        ________INTERVAL________
-          07 May 2021 02:34:46
-*/
 #include<bits/stdc++.h>
 using namespace std;
 typedef long long  L;
